@@ -7,7 +7,10 @@ enum OverFlowTextAnimations {
   infiniteLoop,
 
   /// scroll from top to end and vice versa
-  scrollOpposite
+  scrollOpposite,
+
+  /// scroll from top to end and repeat
+  scrollRepeat
 }
 
 class OverflowTextAnimated extends StatefulWidget {
@@ -84,6 +87,9 @@ class _OverflowTextAnimatedState extends State<OverflowTextAnimated> {
           case OverFlowTextAnimations.scrollOpposite:
             await _handlerScrollOpposite();
             break;
+          case OverFlowTextAnimations.scrollRepeat:
+            await _handlerScrollRepeat();
+            break;
           default:
             await _handlerInfiniteLoop();
         }
@@ -108,6 +114,27 @@ class _OverflowTextAnimatedState extends State<OverflowTextAnimated> {
             _scrollController.position.minScrollExtent,
             duration: widget.animateDuration,
             curve: widget.curve,
+          );
+        }
+      }
+    }
+  }
+
+  Future _handlerScrollRepeat() async {
+    /// scroll to end and wait delay
+    /// then jump back to top
+    while (true) {
+      await Future.delayed(widget.delay);
+      if (_scrollController.hasClients) {
+        await _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: widget.animateDuration,
+          curve: widget.curve,
+        );
+        await Future.delayed(widget.delay);
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(
+            _scrollController.position.minScrollExtent,
           );
         }
       }
