@@ -61,9 +61,6 @@ class _OverflowTextAnimatedState extends State<OverflowTextAnimated> {
   /// [_exceeded] save value overflow or not
   bool _exceeded = false;
 
-  /// max lines of text. Now, only support 1 line
-  final int _maxLines = 1;
-
   /// content of text
   late String _text;
 
@@ -186,7 +183,6 @@ class _OverflowTextAnimatedState extends State<OverflowTextAnimated> {
       );
 
       final tp = TextPainter(
-          maxLines: _maxLines,
           textAlign: TextAlign.left,
           textDirection: TextDirection.ltr,
           text: span,
@@ -209,7 +205,6 @@ class _OverflowTextAnimatedState extends State<OverflowTextAnimated> {
         physics: const NeverScrollableScrollPhysics(),
         child: Text.rich(
           span,
-          maxLines: _maxLines,
           style: widget.style,
         ),
       );
