@@ -76,9 +76,6 @@ class _OverflowTextAnimatedState extends State<OverflowTextAnimated> {
   @override
   void initState() {
     super.initState();
-    _text = widget.text;
-
-    /// initial text
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (_exceeded) {
@@ -179,6 +176,8 @@ class _OverflowTextAnimatedState extends State<OverflowTextAnimated> {
 
   @override
   Widget build(BuildContext context) {
+    _text = widget.text;
+
     return LayoutBuilder(builder: (context, size) {
       final span = TextSpan(
         text: _text,
